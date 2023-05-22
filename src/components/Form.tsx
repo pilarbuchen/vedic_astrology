@@ -1,19 +1,13 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
+import UserData from '../models/forms';
 
-interface UserData { 
-    year: number,
-    month: number,
-    day: number,
-    hour: number,
-    minute: number,
-    second: number,
-    latitude: number,
-    longitud: number,
-    timezone: number
-}
+interface FormSubmit {
+    onSubmit: (data: UserData) => void;
+  }
 
-function Form() : JSX.Element {
-const [ userInput, setUserInput] = useState({
+function Form({onSubmit}: FormSubmit) {
+
+const [ userInput, setUserInput] = useState<UserData>({
     year: "",
     month: "",
     day: "",
@@ -23,65 +17,64 @@ const [ userInput, setUserInput] = useState({
     latitude: "",
     longitud: "",
     timezone: ""
-})
+});
 
 const handleChange =(event: React.FormEvent) => {
-    event.preventDefault();
     setUserInput({ ...userInput, [(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value });
-    console.log(userInput)
   };
   
 
 const submitFormHandler = (event: React.FormEvent) => {
- 
+    event.preventDefault();
+    onSubmit(userInput);
+    setUserInput({
+        year: "",
+        month: "",
+        day: "",
+        hour: "",
+        minute: "",
+        second: "",
+        latitude: "",
+        longitud: "",
+        timezone: ""
+    })
 };
 
     return (
 <form onSubmit={submitFormHandler}>
   <div className="form-group">
     <label>Years</label>
-    <input   type='number'
-  min={1000}
-  max={9999}
+    <input   type='number' min={1000} max={9999}
     name="year" value={userInput.year} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Month</label>
-    <input type='number'
-  min={1}
-  max={12}name="month" value={userInput.month} onChange={handleChange}
-     className="form-control"></input>
+    <input type='number'min={1} max={12}
+    name="month" value={userInput.month} onChange={handleChange}
+    className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Date</label>
-    <input type='number'
-  min={1}
-  max={31}
+    <input type='number'min={1} max={31}
     name="day" value={userInput.day} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Hour</label>
-    <input type='number'
-  min={1}
-  max={24}
+    <input type='number' min={1} max={24}
     name="hour" value={userInput.hour} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Minutes</label>
-    <input type='number'
-  min={0}
-  max={60}
+    <input type='number' min={0} max={60}
     name="minute" value={userInput.minute} onChange={handleChange}
     className="form-control" ></input>
   </div>
   <div className="form-group">
     <label>Seconds</label>
-    <input type='number'
-  min={0}
-  max={60}
+    <input type='number' min={0} max={60}
     name="second" value={userInput.second} onChange={handleChange}
     className="form-control" ></input>
   </div>
