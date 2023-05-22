@@ -1,42 +1,57 @@
 import React, { useState } from 'react';
-import UserData from '../models/forms';
+// import UserData from '../models/forms';
+import axios from 'axios'
 
 interface FormSubmit {
-    onSubmit: (data: UserData) => void;
+    onSubmit: (data: {}) => void;
   }
 
 function Form({onSubmit}: FormSubmit) {
-
-const [ userInput, setUserInput] = useState<UserData>({
-    year: "",
-    month: "",
-    day: "",
-    hour: "",
-    minute: "",
-    second: "",
-    latitude: "",
-    longitud: "",
-    timezone: ""
-});
+const [ userInput, setUserInput] = useState({
+    "year": 2022,
+    "month": 8,
+    "date": 11,
+    "hours": 6,
+    "minutes": 0,
+    "seconds": 0,
+    "latitude": 17.38333,
+    "longitude": 78.4666,
+    "timezone": 5.5,
+    "settings": {
+      "observation_point": "topocentric",
+      "ayanamsha": "lahiri"
+    }
+  });
 
 const handleChange =(event: React.FormEvent) => {
     setUserInput({ ...userInput, [(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value });
   };
   
-
 const submitFormHandler = (event: React.FormEvent) => {
     event.preventDefault();
     onSubmit(userInput);
-    setUserInput({
-        year: "",
-        month: "",
-        day: "",
-        hour: "",
-        minute: "",
-        second: "",
-        latitude: "",
-        longitud: "",
-        timezone: ""
+    // setUserInput({
+    //     year: "",
+    //     month: "",
+    //     day: "",
+    //     hour: "",
+    //     minute: "",
+    //     second: "",
+    //     latitude: "",
+    //     longitud: "",
+    //     timezone: ""
+    // })
+    axios.post('https://json.freeastrologyapi.com/planets', userInput, {
+        headers:  {
+            'Access-Control-Allow-Origin': 'http://localhost:3001',
+            'Content-Type': 'application/json',
+            'x-api-key': '4JTjqMmvgC2WeZfzglpFAaiYVxDaLmPI1I43Is1U'
+          }
+      })
+    .then(response => {
+        console.log(response)
+    }).catch(error => {
+        console.log(error)
     })
 };
 
@@ -57,30 +72,30 @@ const submitFormHandler = (event: React.FormEvent) => {
   <div className="form-group">
     <label>Date</label>
     <input type='number'min={1} max={31}
-    name="day" value={userInput.day} onChange={handleChange}
+    name="day" value={userInput.date} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Hour</label>
     <input type='number' min={1} max={24}
-    name="hour" value={userInput.hour} onChange={handleChange}
+    name="hour" value={userInput.hours} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Minutes</label>
     <input type='number' min={0} max={60}
-    name="minute" value={userInput.minute} onChange={handleChange}
+    name="minute" value={userInput.minutes} onChange={handleChange}
     className="form-control" ></input>
   </div>
   <div className="form-group">
     <label>Seconds</label>
     <input type='number' min={0} max={60}
-    name="second" value={userInput.second} onChange={handleChange}
+    name="second" value={userInput.seconds} onChange={handleChange}
     className="form-control" ></input>
   </div>
   <div className="form-group">
     <label>Longitude</label>
-    <input name="longitud" value={userInput.longitud} onChange={handleChange}
+    <input name="longitud" value={userInput.longitude} onChange={handleChange}
     className="form-control" ></input>
   </div>
   <div className="form-group">
