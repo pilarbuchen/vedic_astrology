@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import Form from './components/Form';
-import UserData from './models/forms';
 
 function App() {
 

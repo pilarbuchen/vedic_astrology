@@ -1,12 +1,16 @@
-import React, { useState, useEffect} from 'react';
-import axios from 'axios'
+import React, { useState } from 'react';
+import CityAutoComplete from './CityAutoComplete';
 
 interface FormSubmit {
     onSubmit: (data: {}) => void;
   }
 
 function Form({onSubmit}: FormSubmit) {
+const [lat,setLat] = useState<number>(0);
+const [lng,setLng] = useState<number>(0);
 
+let localLat = localStorage.getItem('lat')
+let localLng = localStorage.getItem("lng")
 const [ userInput, setUserInput] = useState({
     "year": 2022,
     "month": 8,
@@ -14,8 +18,8 @@ const [ userInput, setUserInput] = useState({
     "hours": 6,
     "minutes": 0,
     "seconds": 0,
-    "latitude": 17.38333,
-    "longitude": 78.4666,
+    "latitude": localLat,
+    "longitude": localLng,
     "timezone": 5.5,
     "settings": {
       "observation_point": "topocentric",
@@ -23,53 +27,50 @@ const [ userInput, setUserInput] = useState({
     }
   });
 
-    // fetching the GET route from the Express server which matches the GET route from server.js
-
 const handleChange =(event: React.FormEvent) => {
     setUserInput({ ...userInput, [(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value });
   };
 
 const submitFormHandler = (event: React.FormEvent) => {
     event.preventDefault();
+    onSubmit(setUserInput)
+    const data = {
+        year: userInput.year,
+        month: userInput.month,
+        date: userInput.date,
+        hours: userInput.hours,
+        minutes: userInput.minutes,
+        seconds: userInput.seconds,
+        latitude: localStorage.getItem('lat'),
+        logitude: localStorage.getItem('lng'),
+        timezone: userInput.timezone,
+        settings: {
+            observation_point: userInput.settings.observation_point,
+            ayanamsha: userInput.settings.ayanamsha
+        }
+    }
     fetch('http://localhost:5000/api/form', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
         },
-        body:JSON.stringify(userInput)
+        body:JSON.stringify(data)
     }).then(response => {
         response.json()
         .then(data => 
         console.log(data))
     })
-    console.log('clicked')
-    // onSubmit(userInput);
-    // setUserInput({
-    //     year: "",
-    //     month: "",
-    //     day: "",
-    //     hour: "",
-    //     minute: "",
-    //     second: "",
-    //     latitude: "",
-    //     longitud: "",
-    //     timezone: ""
-    // })
-//     await axios({
-//         method: "post",
-//         data : JSON.stringify(userInput),
-//        })
-//       .then((response) => {
-//         console.log(response.data)
-//       })
-//       .catch(function (error) {
-//         console.log(error);
-//    });
-
+    
 };
-
+console.log(lat, lng)
     return (
 <form onSubmit={submitFormHandler}>
+    <CityAutoComplete 
+    lat={lat}
+    lng={lng}
+    setLat={setLat}
+    setLng={setLng}
+    />
   <div className="form-group">
     <label>Years</label>
     <input   type='number' min={1000} max={9999}
@@ -106,7 +107,7 @@ const submitFormHandler = (event: React.FormEvent) => {
     name="second" value={userInput.seconds} onChange={handleChange}
     className="form-control" ></input>
   </div>
-  <div className="form-group">
+  {/* <div className="form-group">
     <label>Longitude</label>
     <input name="longitud" value={userInput.longitude} onChange={handleChange}
     className="form-control" ></input>
@@ -115,7 +116,7 @@ const submitFormHandler = (event: React.FormEvent) => {
     <label>Latitude</label>
     <input name="latitude" value={userInput.latitude} onChange={handleChange}
     className="form-control" ></input>
-  </div>
+  </div> */}
   <div className="form-group">
     <label>Timezone</label>
     <input name="timezone" value={userInput.timezone} onChange={handleChange}
