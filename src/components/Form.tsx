@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-// import UserData from '../models/forms';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios'
 
 interface FormSubmit {
@@ -7,6 +6,7 @@ interface FormSubmit {
   }
 
 function Form({onSubmit}: FormSubmit) {
+
 const [ userInput, setUserInput] = useState({
     "year": 2022,
     "month": 8,
@@ -23,13 +23,27 @@ const [ userInput, setUserInput] = useState({
     }
   });
 
+    // fetching the GET route from the Express server which matches the GET route from server.js
+
 const handleChange =(event: React.FormEvent) => {
     setUserInput({ ...userInput, [(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value });
   };
-  
+
 const submitFormHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    onSubmit(userInput);
+    fetch('http://localhost:5000/api/form', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(userInput)
+    }).then(response => {
+        response.json()
+        .then(data => 
+        console.log(data))
+    })
+    console.log('clicked')
+    // onSubmit(userInput);
     // setUserInput({
     //     year: "",
     //     month: "",
@@ -41,18 +55,17 @@ const submitFormHandler = (event: React.FormEvent) => {
     //     longitud: "",
     //     timezone: ""
     // })
-    axios.post('https://json.freeastrologyapi.com/planets', userInput, {
-        headers:  {
-            'Access-Control-Allow-Origin': 'http://localhost:3001',
-            'Content-Type': 'application/json',
-            'x-api-key': '4JTjqMmvgC2WeZfzglpFAaiYVxDaLmPI1I43Is1U'
-          }
-      })
-    .then(response => {
-        console.log(response)
-    }).catch(error => {
-        console.log(error)
-    })
+//     await axios({
+//         method: "post",
+//         data : JSON.stringify(userInput),
+//        })
+//       .then((response) => {
+//         console.log(response.data)
+//       })
+//       .catch(function (error) {
+//         console.log(error);
+//    });
+
 };
 
     return (
