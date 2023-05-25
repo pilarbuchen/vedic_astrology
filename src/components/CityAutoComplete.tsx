@@ -12,7 +12,7 @@ type Props = {
 
 const CityAutoComplete: React.FC<Props> = ({setLat, setLng, lat, lng}) => {
 
-
+    console.log(lat, lng)
     return (
         <div>
             <Autocomplete
@@ -20,8 +20,8 @@ const CityAutoComplete: React.FC<Props> = ({setLat, setLng, lat, lng}) => {
   onPlaceSelected={(place) => {
     console.log(place);
   if (place) {
-    lat = place.geometry.location.lng();
-    lng = place.geometry.location.lat();
+    lng = place.geometry.location.lng();
+    lat = place.geometry.location.lat();
   }
 
   setLat(lat)

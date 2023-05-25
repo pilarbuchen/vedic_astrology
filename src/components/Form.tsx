@@ -8,21 +8,18 @@ interface FormSubmit {
 function Form({onSubmit}: FormSubmit) {
 const [lat,setLat] = useState<number>(0);
 const [lng,setLng] = useState<number>(0);
-
-let localLat = localStorage.getItem('lat')
-let localLng = localStorage.getItem("lng")
 const [ userInput, setUserInput] = useState({
-    "year": 2022,
-    "month": 8,
-    "date": 11,
-    "hours": 6,
-    "minutes": 0,
-    "seconds": 0,
-    "latitude": localLat,
-    "longitude": localLng,
-    "timezone": 5.5,
+    "year": "",
+    "month": "",
+    "date": "",
+    "hours": "",
+    "minutes": "",
+    "seconds": "",
+    "latitude": "",
+    "longitude": "",
+    "timezone": "",
     "settings": {
-      "observation_point": "topocentric",
+      "observation_point": "geocentric",
       "ayanamsha": "lahiri"
     }
   });
@@ -33,22 +30,23 @@ const handleChange =(event: React.FormEvent) => {
 
 const submitFormHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    onSubmit(setUserInput)
+    onSubmit(setUserInput);
     const data = {
-        year: userInput.year,
-        month: userInput.month,
-        date: userInput.date,
-        hours: userInput.hours,
-        minutes: userInput.minutes,
-        seconds: userInput.seconds,
-        latitude: localStorage.getItem('lat'),
-        logitude: localStorage.getItem('lng'),
-        timezone: userInput.timezone,
+        year: +userInput.year,
+        month: +userInput.month,
+        date: +userInput.date,
+        hours: +userInput.hours,
+        minutes: +userInput.minutes,
+        seconds: +userInput.seconds,
+        latitude: lat,
+        longitude: lng,
+        timezone: +userInput.timezone,
         settings: {
             observation_point: userInput.settings.observation_point,
             ayanamsha: userInput.settings.ayanamsha
         }
     }
+
     fetch('http://localhost:5000/api/form', {
         method: 'post',
         headers: {
@@ -62,7 +60,7 @@ const submitFormHandler = (event: React.FormEvent) => {
     })
     
 };
-console.log(lat, lng)
+
     return (
 <form onSubmit={submitFormHandler}>
     <CityAutoComplete 
@@ -73,50 +71,46 @@ console.log(lat, lng)
     />
   <div className="form-group">
     <label>Years</label>
-    <input   type='number' min={1000} max={9999}
+    <input  
+    //  type='number' min={1000} max={9999}
     name="year" value={userInput.year} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Month</label>
-    <input type='number'min={1} max={12}
+    <input 
+    // type='number'min={1} max={12}
     name="month" value={userInput.month} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Date</label>
-    <input type='number'min={1} max={31}
-    name="day" value={userInput.date} onChange={handleChange}
+    <input 
+    // type='number'min={1} max={31}
+    name="date" value={userInput.date} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Hour</label>
-    <input type='number' min={1} max={24}
-    name="hour" value={userInput.hours} onChange={handleChange}
+    <input 
+    // type='number' min={1} max={24}
+    name="hours" value={userInput.hours} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Minutes</label>
-    <input type='number' min={0} max={60}
-    name="minute" value={userInput.minutes} onChange={handleChange}
+    <input 
+    // type='number' min={0} max={60}
+    name="minutes" value={userInput.minutes} onChange={handleChange}
     className="form-control" ></input>
   </div>
   <div className="form-group">
     <label>Seconds</label>
-    <input type='number' min={0} max={60}
-    name="second" value={userInput.seconds} onChange={handleChange}
+    <input 
+    // type='number' min={0} max={60}
+    name="seconds" value={userInput.seconds} onChange={handleChange}
     className="form-control" ></input>
   </div>
-  {/* <div className="form-group">
-    <label>Longitude</label>
-    <input name="longitud" value={userInput.longitude} onChange={handleChange}
-    className="form-control" ></input>
-  </div>
-  <div className="form-group">
-    <label>Latitude</label>
-    <input name="latitude" value={userInput.latitude} onChange={handleChange}
-    className="form-control" ></input>
-  </div> */}
   <div className="form-group">
     <label>Timezone</label>
     <input name="timezone" value={userInput.timezone} onChange={handleChange}
