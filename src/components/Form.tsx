@@ -6,6 +6,7 @@ interface FormSubmit {
   }
 
 function Form({onSubmit}: FormSubmit) {
+const [ timeZone, setTimeZone] = useState<number>(0);
 const [lat,setLat] = useState<number>(0);
 const [lng,setLng] = useState<number>(0);
 const [ userInput, setUserInput] = useState({
@@ -40,7 +41,7 @@ const submitFormHandler = (event: React.FormEvent) => {
         seconds: +userInput.seconds,
         latitude: lat,
         longitude: lng,
-        timezone: +userInput.timezone,
+        timezone: timeZone,
         settings: {
             observation_point: userInput.settings.observation_point,
             ayanamsha: userInput.settings.ayanamsha
@@ -64,6 +65,8 @@ const submitFormHandler = (event: React.FormEvent) => {
     return (
 <form onSubmit={submitFormHandler}>
     <CityAutoComplete 
+    timeZone={timeZone}
+    setTimeZone={setTimeZone}
     lat={lat}
     lng={lng}
     setLat={setLat}
@@ -109,11 +112,6 @@ const submitFormHandler = (event: React.FormEvent) => {
     <input 
     // type='number' min={0} max={60}
     name="seconds" value={userInput.seconds} onChange={handleChange}
-    className="form-control" ></input>
-  </div>
-  <div className="form-group">
-    <label>Timezone</label>
-    <input name="timezone" value={userInput.timezone} onChange={handleChange}
     className="form-control" ></input>
   </div>
   <button type="submit" className="btn btn-primary">Submit</button>
