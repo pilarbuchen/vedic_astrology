@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import CityAutoComplete from './CityAutoComplete';
+import SignList from './SignList';
+import UserData from '../models/forms';
+import { userInfo } from 'os';
 
 interface FormSubmit {
     onSubmit: (data: {}) => void;
   }
 
 function Form({onSubmit}: FormSubmit) {
-const [ timeZone, setTimeZone] = useState<number>(0);
+const [search, setSearch] = useState(false);
+const [signs, setSigns] = useState();
+const [timeZone, setTimeZone] = useState<number>(0);
 const [lat,setLat] = useState<number>(0);
 const [lng,setLng] = useState<number>(0);
 const [ userInput, setUserInput] = useState({
-    "year": "",
-    "month": "",
-    "date": "",
-    "hours": "",
-    "minutes": "",
-    "seconds": "",
-    "latitude": "",
-    "longitude": "",
-    "timezone": "",
+    "year": 0,
+    "month": 0,
+    "date": 0,
+    "hours": 0,
+    "minutes": 0,
+    "seconds": 0,
     "settings": {
       "observation_point": "geocentric",
       "ayanamsha": "lahiri"
     }
   });
-
+  
 const handleChange =(event: React.FormEvent) => {
     setUserInput({ ...userInput, [(event.target as HTMLInputElement).name]: (event.target as HTMLInputElement).value });
   };
 
-const submitFormHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-    onSubmit(setUserInput);
-    const data = {
+const data = {
         year: +userInput.year,
         month: +userInput.month,
         date: +userInput.date,
@@ -48,22 +48,35 @@ const submitFormHandler = (event: React.FormEvent) => {
         }
     }
 
-    fetch('http://localhost:5000/api/form', {
+const submitFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+    onSubmit(setUserInput);
+  }
+
+  useEffect(() => {
+    getAPI(); // fecthPosts is called each time space changed
+  }, [search]);
+
+  async function getAPI() {
+     const response = await fetch('http://localhost:5000/api/form', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
         },
         body:JSON.stringify(data)
-    }).then(response => {
-        response.json()
-        .then(data => 
-        console.log(data))
     })
-    
-};
+    if (!response.ok) {
+      throw new Error('Network response was not OK');
+    } else {
+      let userData = await response.json()
+      let userPlanets = await userData?.output?.[0]
+      setSigns(userPlanets)
+    }
+  }
 
     return (
 <form onSubmit={submitFormHandler}>
+    <SignList signs={signs}/>
     <CityAutoComplete 
     timeZone={timeZone}
     setTimeZone={setTimeZone}
@@ -73,48 +86,42 @@ const submitFormHandler = (event: React.FormEvent) => {
     setLng={setLng}
     />
   <div className="form-group">
-    <label>Years</label>
+    <label>Year</label>
     <input  
-    //  type='number' min={1000} max={9999}
     name="year" value={userInput.year} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Month</label>
     <input 
-    // type='number'min={1} max={12}
     name="month" value={userInput.month} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Date</label>
     <input 
-    // type='number'min={1} max={31}
     name="date" value={userInput.date} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Hour</label>
     <input 
-    // type='number' min={1} max={24}
     name="hours" value={userInput.hours} onChange={handleChange}
     className="form-control"></input>
   </div>
   <div className="form-group">
     <label>Minutes</label>
     <input 
-    // type='number' min={0} max={60}
     name="minutes" value={userInput.minutes} onChange={handleChange}
     className="form-control" ></input>
   </div>
   <div className="form-group">
     <label>Seconds</label>
     <input 
-    // type='number' min={0} max={60}
     name="seconds" value={userInput.seconds} onChange={handleChange}
     className="form-control" ></input>
   </div>
-  <button type="submit" className="btn btn-primary">Submit</button>
+  <button type="submit" className="btn btn-primary" onClick={() => setSearch(!search)}>Submit</button>
 </form>
     );
 }

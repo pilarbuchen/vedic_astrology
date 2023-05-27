@@ -3,7 +3,7 @@ import axios from 'axios';
 import React from 'react';
 import Autocomplete from "react-google-autocomplete";
 
-type Props = {
+type CityProps = {
     lat: number;
     lng: number;
     setLng: (val: number) => void;
@@ -13,7 +13,7 @@ type Props = {
   };
   
 
-const CityAutoComplete: React.FC<Props> = ({setLat, setLng, lat, lng, timeZone, setTimeZone}) => {
+const CityAutoComplete: React.FC<CityProps> = ({setLat, setLng, lat, lng, timeZone, setTimeZone}) => {
 
 axios
   .get(`https://api.wheretheiss.at/v1/coordinates/${lat},${lng}`)
