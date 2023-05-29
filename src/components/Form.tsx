@@ -74,10 +74,26 @@ const submitFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
       for (let key in userPlanets) {      
           if (userPlanets.hasOwnProperty(key)) keys.push(key);
       }
-
-      for (let i=0; i < keys.length && i < 600; i++) { 
-       console.log(keys[i], userPlanets[keys[i]].current_sign);
+      let planetsArr: any[] = []
+      let signsArr: any[] = []
+      for (let i=0; i < keys.length; i++) { 
+       console.log(planetsArr.push(keys[i]), signsArr.push(userPlanets[keys[i]].current_sign));    
      }
+
+    let arrListPlantsSigns: any = [];
+
+planetsArr.forEach(function(v,i){
+  let obj = {planets: "", signs: 0};
+  obj.planets = v;
+  obj.signs = signsArr[i];
+  arrListPlantsSigns.push(obj);
+});
+
+console.log(arrListPlantsSigns);
+   
+setSigns(arrListPlantsSigns)
+
+
   }
     
   }

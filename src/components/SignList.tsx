@@ -1,33 +1,43 @@
 import React from 'react';
 
 interface SignsProps {
- signs: {name: string, current_sign: number}
+ signs: {[key: string]: number | string}[]
 }
 
-const SignList: React.FC<SignsProps> = ({signs}) => {
-console.log(signs)
+function SignList ({signs}: SignsProps) {
 
-if (signs === undefined) {
-  console.log('not here')
-  return 
-} else {
-  // console.log(signs[0].name)
-  console.log([signs])
-  console.log([signs].map(sign => sign.name))
+// if (signs) {
+//   for (const [key, value] of Object.entries(signs)) {
+//     if (value.sign === 1) {
+//       value.sign = 'Aries'
+//     }
+//     console.log(value.sign)
+//   }
+  
+// }
+
+let astrologyOrder = {
+  1: 'Aries', 
+  2: 'Taurus',
+  3: 'Gemini ',
+  4: 'Cancer',
+  5: 'Leo',
+  6: 'Virgo',
+  7: 'Libra',
+  8: 'Scorpio',
+  9: 'Sagitarius',
+  10: 'Capricorn',
+  11: 'Aquarius',
+  12: 'Piscies'
 }
+
         return (
-<>
-
-
+          <>
+<>{signs?.map(p => p.signs )}</>
 </>
-        
-          // <ul className={'list-group'}>
-          // {[signs].map(sign => <li className='list-group-item' key={sign.name}>{sign.current_sign} 
-          // </li>)}
-      // </ul>
-
         );
-       }
+        };
+
 
 
 export default SignList;
