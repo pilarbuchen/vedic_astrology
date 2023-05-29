@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import CityAutoComplete from './CityAutoComplete';
 import SignList from './SignList';
-import UserData from '../models/forms';
-import { userInfo } from 'os';
+
 
 interface FormSubmit {
     onSubmit: (data: {}) => void;
@@ -69,9 +68,18 @@ const submitFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
       throw new Error('Network response was not OK');
     } else {
       let userData = await response.json()
-      let userPlanets = await userData?.output?.[0]
-      setSigns(userPlanets)
-    }
+      let userPlanets = await userData?.output?.[1];
+
+      let keys = [];
+      for (let key in userPlanets) {      
+          if (userPlanets.hasOwnProperty(key)) keys.push(key);
+      }
+
+      for (let i=0; i < keys.length && i < 600; i++) { 
+       console.log(keys[i], userPlanets[keys[i]].current_sign);
+     }
+  }
+    
   }
 
     return (
