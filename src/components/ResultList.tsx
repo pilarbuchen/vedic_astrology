@@ -1,17 +1,16 @@
-/* eslint-disable react/style-prop-object */
-import React from 'react';
-
 interface SignsProps {
- signs: {planets: string, signs: string | number}[];
+ signs: {planets: string, signs: string | number, id: number}[];
  chart: string;
  search: boolean;
 }
 
-function SignList ({signs, chart, search}: SignsProps) {
+function ResultList ({signs, chart, search}: SignsProps) {
 
-  console.log(chart)
+const renderList = signs?.map((item) => 
+                               <li key='{item.id}'>{item.planets +  " : "  + item.signs}</li>
+                             );
 
-if (signs) {
+if (search) {
   for (const [key, value] of Object.entries(signs)) {
     if (value.signs === 1) {
       value.signs = 'Aries'
@@ -43,19 +42,19 @@ if (signs) {
 }
 
         return (
-          <>
-{search?  <ul>
-        {signs?.map(p => p.planets + p.signs)}
-        <img src={chart} alt={"logo"}/>  
+          <div>
+{search && chart? <ul>
+  <img src={chart} alt={"logo"}/>  
+        {renderList}
       </ul>
         : <></>
       }
 
-</>
+</div>
         );
         };
 
 
 
-export default SignList;
+export default ResultList;
 

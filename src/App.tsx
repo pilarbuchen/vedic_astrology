@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Form from './components/Form';
-import SignList from './components/SignList';
+import SignList from './components/ResultList';
 
 function App() {
 

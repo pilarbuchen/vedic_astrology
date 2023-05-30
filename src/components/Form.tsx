@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import CityAutoComplete from './CityAutoComplete';
-import SignList from './SignList';
+import SignList from './ResultList';
 
 
 interface FormSubmit {
@@ -10,7 +10,7 @@ interface FormSubmit {
 
 function Form({onSubmit}: FormSubmit) {
 const [search, setSearch] = useState(false);
-const [signs, setSigns] = useState();
+const [signs, setSigns] = useState(null);
 const [chart, setChart] = useState();
 const [timeZone, setTimeZone] = useState<number>(0);
 const [lat,setLat] = useState<number>(0);
@@ -76,21 +76,22 @@ const submitFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
       for (let key in userPlanets) {      
           if (userPlanets.hasOwnProperty(key)) keys.push(key);
       }
-      let planetsArr: any[] = []
-      let signsArr: any[] = []
+      let planetsArr: string [] = []
+      let signsArr: number [] = []
       for (let i=0; i < keys.length; i++) { 
+       // eslint-disable-next-line @typescript-eslint/no-unused-vars
        let setArrs = (planetsArr.push(keys[i]), signsArr.push(userPlanets[keys[i]].current_sign));    
      }
 
-    let arrListPlantsSigns: any = [];
+    let arrListPlantsSigns: {}[] = [];
 
 planetsArr.forEach(function(v,i){
-  let obj = {planets: "", signs: 0};
+  let obj = {planets: "", signs: 0, id: Math.floor(Math.random() * 100)};
   obj.planets = v;
   obj.signs = signsArr[i];
   arrListPlantsSigns.push(obj);
 });
-   
+   console.log(arrListPlantsSigns)
 setSigns(arrListPlantsSigns)
 
 
