@@ -22,7 +22,7 @@ function ResultList({
     </li>
   ));
 
-  if (search) {
+  if (!search) {
     for (const [key, value] of Object.entries(
       signs
     )) {
@@ -56,11 +56,11 @@ function ResultList({
 
   return (
     <div>
-      {search && chart && !fixed ? (
+      {search && chart ? (
         <ul>
           <img
             src={chart}
-            alt={'lo'}
+            alt={'chart'}
           />
           {renderList}
         </ul>
