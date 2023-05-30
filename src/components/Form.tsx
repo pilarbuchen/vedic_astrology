@@ -11,6 +11,7 @@ interface FormSubmit {
 function Form({onSubmit}: FormSubmit) {
 const [search, setSearch] = useState(false);
 const [signs, setSigns] = useState();
+const [chart, setChart] = useState();
 const [timeZone, setTimeZone] = useState<number>(0);
 const [lat,setLat] = useState<number>(0);
 const [lng,setLng] = useState<number>(0);
@@ -53,7 +54,8 @@ const submitFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
   }
 
   useEffect(() => {
-    getAPI(); // fecthPosts is called each time space changed
+    getAPI();
+    getAPIChart(); 
   }, [search]);
 
   async function getAPI() {
@@ -77,7 +79,7 @@ const submitFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
       let planetsArr: any[] = []
       let signsArr: any[] = []
       for (let i=0; i < keys.length; i++) { 
-       console.log(planetsArr.push(keys[i]), signsArr.push(userPlanets[keys[i]].current_sign));    
+       let setArrs = (planetsArr.push(keys[i]), signsArr.push(userPlanets[keys[i]].current_sign));    
      }
 
     let arrListPlantsSigns: any = [];
@@ -88,8 +90,6 @@ planetsArr.forEach(function(v,i){
   obj.signs = signsArr[i];
   arrListPlantsSigns.push(obj);
 });
-
-console.log(arrListPlantsSigns);
    
 setSigns(arrListPlantsSigns)
 
@@ -98,9 +98,24 @@ setSigns(arrListPlantsSigns)
     
   }
 
+  async function getAPIChart() {
+    const response = await fetch('http://localhost:5000/api/chart', {
+       method: 'post',
+       headers: {
+           'Content-Type': 'application/json'
+       },
+       body:JSON.stringify(data)
+   })
+   if (!response.ok) {
+     throw new Error('Network response was not OK');
+   } else {
+     let userDataChart = await response.json()
+     setChart(userDataChart.output)
+ }
+  }
     return (
 <form onSubmit={submitFormHandler}>
-    <SignList signs={signs}/>
+    <SignList signs={signs} chart={chart} search={search}/>
     <CityAutoComplete 
     timeZone={timeZone}
     setTimeZone={setTimeZone}

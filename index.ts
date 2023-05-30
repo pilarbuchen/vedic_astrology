@@ -8,19 +8,30 @@ const app = express();
 
 app.use(cors());
 
-app.get('/api',(req,res) => {
-    res.send('From server')
-})
+const config = { headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': '4JTjqMmvgC2WeZfzglpFAaiYVxDaLmPI1I43Is1U'
+}
+}
 
 app.post('/api/form',bodyParser.json(), (req, res) => {
     console.log(req.body)
     axios.post('https://json.freeastrologyapi.com/planets', req.body
-        , {
-            headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': '4JTjqMmvgC2WeZfzglpFAaiYVxDaLmPI1I43Is1U'
-            }
-          }).then((response) => {
+        , config)
+          .then((response) => {
+            res.json(response.data);
+            console.log(response.data)
+        }).catch((error) => {
+            res.json(error);
+        });
+
+})
+
+app.post('/api/chart',bodyParser.json(), (req, res) => {
+    console.log(req.body)
+    axios.post('https://json.freeastrologyapi.com/horoscope-chart-url', req.body
+        , config)
+          .then((response) => {
             res.json(response.data);
             console.log(response.data)
         }).catch((error) => {

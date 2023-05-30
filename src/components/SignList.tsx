@@ -1,10 +1,15 @@
+/* eslint-disable react/style-prop-object */
 import React from 'react';
 
 interface SignsProps {
- signs: {planets: string, signs: string | number}[]
+ signs: {planets: string, signs: string | number}[];
+ chart: string;
+ search: boolean;
 }
 
-function SignList ({signs}: SignsProps) {
+function SignList ({signs, chart, search}: SignsProps) {
+
+  console.log(chart)
 
 if (signs) {
   for (const [key, value] of Object.entries(signs)) {
@@ -33,15 +38,19 @@ if (signs) {
     } else if (value.signs === 12) {
       value.signs = 'Pisces'
     }
-  
-    console.log(value.signs)
   }
   
 }
 
         return (
           <>
-<>{signs?.map(p => p.planets + p.signs)}</>
+{search?  <ul>
+        {signs?.map(p => p.planets + p.signs)}
+        <img src={chart} alt={"logo"}/>  
+      </ul>
+        : <></>
+      }
+
 </>
         );
         };
