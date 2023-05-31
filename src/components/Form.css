@@ -1,0 +1,14 @@
+.button-margin {
+    margin: 0px 0px 0px 10px;
+    padding-bottom: 10px;
+}
+
+.inputs {
+    margin: 2px;
+    padding: 10px;
+    align-self: stretch;
+}
+
+.text {}
+
+.form {}

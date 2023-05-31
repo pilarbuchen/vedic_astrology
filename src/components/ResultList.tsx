@@ -1,4 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import React from 'react';
+
 interface SignsProps {
   signs: {
     planets: string;
@@ -16,6 +24,18 @@ function ResultList({
   search,
   fixed,
 }: SignsProps) {
+  const [dense, setDense] = React.useState(false);
+
+  console.log(signs)
+
+  function generate(element: React.ReactElement) {
+    return [0, 1, 2].map((value) =>
+      React.cloneElement(element, {
+        key: value,
+      }),
+    );
+  }
+
   const renderList = signs?.map((item) => (
     <li key="{item.id}">
       {item.planets + ' : ' + item.signs}
@@ -55,6 +75,8 @@ function ResultList({
   }
 
   return (
+    <>
+       
     <div>
       {search && chart ? (
         <ul>
@@ -68,6 +90,24 @@ function ResultList({
         <></>
       )}
       {fixed ? (
+        <>
+ <Grid item xs={12} md={6}>
+ <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+   Icon with text
+ </Typography>
+   <List dense={dense}>
+     {generate(
+       <ListItem>
+         <ListItemIcon>
+         </ListItemIcon>
+         <ListItemText
+           primary="Single-line item"
+         />
+       </ListItem>,
+     )}
+   </List>
+</Grid>
+<>
         <ul>
           <img
             src={
@@ -77,10 +117,13 @@ function ResultList({
           <li>Test: Two</li>
           <li>Test: Three</li>
         </ul>
+        </>
+        </>
       ) : (
         <></>
       )}
     </div>
+    </>
   );
 }
 

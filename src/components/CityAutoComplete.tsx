@@ -30,17 +30,21 @@ const CityAutoComplete: React.FC<CityProps> = ({
     .then(function (response) {
       setTimeZone(response.data.offset);
     });
+
   const { ref: materialRef } = usePlacesWidget({
-    apiKey: process.env.REACT_APP_GOOGLE,
-    onPlaceSelected: (place) =>
-      console.log(place),
-    inputAutocompleteValue: 'country',
+    apiKey:
+      'AIzaSyDdnDgTYseTmr5yZWrpX1zHegS05NaT6JE',
+    onPlaceSelected: (place) => {
+      lng = place.geometry.location.lng();
+      lat = place.geometry.location.lat();
+      setLat(lat);
+      setLng(lng);
+    },
   });
 
   return (
     <div>
       <TextField
-        required
         inputRef={materialRef}
         size="small"
         label="City"
