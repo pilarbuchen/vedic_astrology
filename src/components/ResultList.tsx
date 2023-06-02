@@ -12,6 +12,7 @@ interface SignsProps {
     planets: string;
     signs: string | number;
     id: number;
+    planetSVG: string
   }[];
   chart: string;
   search: boolean;
@@ -25,7 +26,7 @@ function ResultList({
   fixed,
 }: SignsProps) {
   const [dense, setDense] = React.useState(false);
-
+  const logo = require("./mars.svg") as string; 
   console.log(signs)
 
   function generate(element: React.ReactElement) {
@@ -35,10 +36,11 @@ function ResultList({
       }),
     );
   }
-
+  
   const renderList = signs?.map((item) => (
-    <li key="{item.id}">
-      {item.planets + ' : ' + item.signs}
+    <li>
+      <img src={logo}/>
+        {item.planets + ' : ' + item.signs }
     </li>
   ));
 
@@ -79,6 +81,7 @@ function ResultList({
        
     <div>
       {search && chart ? (
+        
         <ul>
           <img
             src={chart}
@@ -92,17 +95,10 @@ function ResultList({
       {fixed ? (
         <>
  <Grid item xs={12} md={6}>
- <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-   Icon with text
- </Typography>
    <List dense={dense}>
      {generate(
        <ListItem>
-         <ListItemIcon>
-         </ListItemIcon>
-         <ListItemText
-           primary="Single-line item"
-         />
+      Test
        </ListItem>,
      )}
    </List>

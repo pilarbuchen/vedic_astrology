@@ -5,7 +5,9 @@ export default createBoard({
     name: 'Form',
     Board: () => <Form onSubmit={undefined} />,
     environmentProps: {
-        canvasWidth: 708,
-        canvasHeight: 331
+        canvasWidth: 760,
+        canvasHeight: 331,
+        windowWidth: 1920,
+        windowHeight: 1080
     }
 });
