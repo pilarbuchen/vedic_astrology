@@ -2,8 +2,8 @@
 import {SVGicon} from './icon'
 
 export default[
+    SVGicon.asc,
     SVGicon.mars,
-    SVGicon.a,
     SVGicon.b,
     SVGicon.c,
     SVGicon.d,
