@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/alt-text */
-import List from '@mui/material/List';
 import {
   createTheme,
   ThemeProvider,
@@ -32,7 +31,11 @@ function ResultList({
   fixed,
 }: SignsProps) {
   const renderList = signs?.map((item) => (
-    <ListItem>
+    <ListItem
+      style={{
+        marginLeft: '180px',
+      }}
+      >
       <ListItemAvatar>
         <Avatar
           src={item.planetSVG}
@@ -106,21 +109,22 @@ function ResultList({
             <>
               <Grid
                 direction="row"
-                justifyContent="center"
-                alignItems="center"
-                container spacing={2} columns={16}>
-                    
+                // justifyContent="center"
+                // alignItems="center"
+                container
+                columns={16}>
                 <Grid
                   item
-                  xs={6}
-                  >
+                  xs={12}>
                   {renderList}
                 </Grid>
                 <Grid
                   item
-                  xs={6}
-                  >
+                  xs={4}>
                   <img
+                    style={{
+                      marginTop: '50%',
+                    }}
                     src={chart}
                     alt={'chart'}
                   />

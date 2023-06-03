@@ -13,6 +13,7 @@ import {
   ThemeProvider,
 } from '@mui/material/styles';
 import dataSVG from '../image/data';
+import { Box, Grid } from '@mui/material';
 
 interface FormSubmit {
   onSubmit: (data: {}) => void;
@@ -21,12 +22,14 @@ interface FormSubmit {
 function Form({ onSubmit }: FormSubmit) {
   const [fixed, setFixed] = useState(true);
   const [search, setSearch] = useState(false);
-  const [signs, setSigns] = useState([{
-    planets: '',
-    signs: 0,
-    id: 0,
-    planetSVG: '',
-  }]);
+  const [signs, setSigns] = useState([
+    {
+      planets: '',
+      signs: 0,
+      id: 0,
+      planetSVG: '',
+    },
+  ]);
   const [chart, setChart] = useState('');
   const [timeZone, setTimeZone] =
     useState<number>(0);
@@ -163,136 +166,163 @@ function Form({ onSubmit }: FormSubmit) {
     }
   }
   return (
-    <div>
-      <div>
-        <SignList
-          signs={signs}
-          chart={chart}
-          search={true}
-          fixed={false}
-        />
-      </div>
-      <div>
-        <form onSubmit={submitFormHandler}>
-          <ThemeProvider
-            theme={createTheme({
-              typography: {
-                fontFamily: [
-                  '-apple-system',
-                  'BlinkMacSystemFont',
-                  '"Segoe UI"',
-                  'Roboto',
-                  '"Helvetica Neue"',
-                  'Arial',
-                  'sans-serif',
-                  '"Apple Color Emoji"',
-                  '"Segoe UI Emoji"',
-                  '"Segoe UI Symbol"',
-                ].join(','),
-              },
-            })}>
-            <div className="inputs">
-              <div>
-                <CityAutoComplete
-                  timeZone={timeZone}
-                  setTimeZone={setTimeZone}
-                  lat={lat}
-                  lng={lng}
-                  setLat={setLat}
-                  setLng={setLng}
-                />
-              </div>
-              <div>
-                <TextField
-                  size="small"
-                  required
-                  id="outlined-required"
-                  name="year"
-                  label="Year"
-                  type="number"
-                  value={userInput.year}
-                  onChange={handleChange}
-                  className="text"
-                />
-              </div>
-              <div>
-                <TextField
-                  required
-                  size="small"
-                  id="outlined-required"
-                  name="month"
-                  label="Month"
-                  type="number"
-                  value={userInput.month}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <TextField
-                  required
-                  size="small"
-                  id="outlined-required"
-                  name="date"
-                  label="Day"
-                  type="number"
-                  value={userInput.date}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <TextField
-                  required
-                  size="small"
-                  id="outlined-required"
-                  name="hours"
-                  label="Hours"
-                  type="number"
-                  value={userInput.hours}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <TextField
-                  required
-                  size="small"
-                  id="outlined-required"
-                  name="minutes"
-                  label="Minutes"
-                  type="number"
-                  value={userInput.minutes}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <TextField
-                  required
-                  size="small"
-                  id="outlined-required"
-                  name="seconds"
-                  label="Seconds"
-                  type="number"
-                  value={userInput.seconds}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <br />
-            <div className="button-margin">
-              <Button
-                variant="outlined"
-                type="submit"
-                className="btn btn-primary"
-                onClick={() => {
-                  setSearch(!search);
-                  setFixed(!fixed);
+    <div
+      style={{
+        marginLeft: '30px',
+        marginTop: '30px',
+      }}>
+      <Grid
+        spacing={2}
+        columns={16}
+        container
+        direction="row">
+        <div>
+          <Grid
+            item
+            xs={6}
+            md={4}>
+            <form onSubmit={submitFormHandler}>
+              <Box
+                sx={{
+                  '& .MuiTextField-root': {
+                    m: 1,
+                    width: '25ch',
+                  },
                 }}>
-                Submit
-              </Button>
-            </div>
-            {/* </Box> */}
-          </ThemeProvider>
-        </form>
-      </div>
+                <ThemeProvider
+                  theme={createTheme({
+                    typography: {
+                      fontFamily: [
+                        '-apple-system',
+                        'BlinkMacSystemFont',
+                        '"Segoe UI"',
+                        'Roboto',
+                        '"Helvetica Neue"',
+                        'Arial',
+                        'sans-serif',
+                        '"Apple Color Emoji"',
+                        '"Segoe UI Emoji"',
+                        '"Segoe UI Symbol"',
+                      ].join(','),
+                    },
+                  })}>
+                  <div>
+                    <div>
+                      <CityAutoComplete
+                        timeZone={timeZone}
+                        setTimeZone={setTimeZone}
+                        lat={lat}
+                        lng={lng}
+                        setLat={setLat}
+                        setLng={setLng}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        size="small"
+                        required
+                        id="outlined-required"
+                        name="year"
+                        label="Year"
+                        type="number"
+                        value={userInput.year}
+                        onChange={handleChange}
+                        className="text"
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        required
+                        size="small"
+                        id="outlined-required"
+                        name="month"
+                        label="Month"
+                        type="number"
+                        value={userInput.month}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        required
+                        size="small"
+                        id="outlined-required"
+                        name="date"
+                        label="Day"
+                        type="number"
+                        value={userInput.date}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        required
+                        size="small"
+                        id="outlined-required"
+                        name="hours"
+                        label="Hours"
+                        type="number"
+                        value={userInput.hours}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        required
+                        size="small"
+                        id="outlined-required"
+                        name="minutes"
+                        label="Minutes"
+                        type="number"
+                        value={userInput.minutes}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        required
+                        size="small"
+                        id="outlined-required"
+                        name="seconds"
+                        label="Seconds"
+                        type="number"
+                        value={userInput.seconds}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <br />
+                  <div className="button-margin">
+                    <Button
+                      variant="outlined"
+                      type="submit"
+                      className="btn btn-primary"
+                      onClick={() => {
+                        setSearch(!search);
+                        setFixed(!fixed);
+                      }}>
+                      Submit
+                    </Button>
+                  </div>
+                </ThemeProvider>
+              </Box>
+            </form>
+          </Grid>
+        </div>
+        <div>
+          <Grid
+            item
+            xs={6}
+            md={12}>
+            <SignList
+              signs={signs}
+              chart={chart}
+              search={true}
+              fixed={false}
+            />
+          </Grid>
+        </div>
+      </Grid>
     </div>
   );
 }
