@@ -1,11 +1,16 @@
 /* eslint-disable jsx-a11y/alt-text */
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
+import {
+    createTheme,
+    ThemeProvider,
+  } from '@mui/material/styles';
 import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import React from 'react';
+import {
+  Avatar,
+  ListItemAvatar,
+} from '@mui/material';
 
 interface SignsProps {
   signs: {
@@ -25,22 +30,24 @@ function ResultList({
   search,
   fixed,
 }: SignsProps) {
-  const [dense, setDense] = React.useState(false);
-  const logo = require('./mars.svg') as string;
-  console.log(signs);
-
-  function generate(element: React.ReactElement) {
-    return [0, 1, 2].map((value) =>
-      React.cloneElement(element, {
-        key: value,
-      })
-    );
-  }
-
+ 
   const renderList = signs?.map((item) => (
-    <li>
-        <img src={item.planetSVG} />{item.planets + ' : ' + item.signs}
-    </li>
+    <ListItem>
+      <ListItemAvatar>
+        <Avatar
+          src={item.planetSVG}
+          sx={{ width: 20, height: 20 }}
+          style={{
+            objectFit: 'contain',
+          }}
+        />
+      </ListItemAvatar>
+      <ListItemText
+        primary={
+          item.planets + ' : ' + item.signs
+        }
+      />
+    </ListItem>
   ));
 
   if (!search) {
@@ -77,6 +84,23 @@ function ResultList({
 
   return (
     <>
+       <ThemeProvider
+            theme={createTheme({
+              typography: {
+                fontFamily: [
+                  '-apple-system',
+                  'BlinkMacSystemFont',
+                  '"Segoe UI"',
+                  'Roboto',
+                  '"Helvetica Neue"',
+                  'Arial',
+                  'sans-serif',
+                  '"Apple Color Emoji"',
+                  '"Segoe UI Emoji"',
+                  '"Segoe UI Symbol"',
+                ].join(','),
+              },
+            })}>
       <div about="">
         {search && chart ? (
           <ul>
@@ -91,22 +115,9 @@ function ResultList({
         )}
         {fixed ? (
           <>
-            <Grid
-              item
-              xs={12}
-              md={6}>
-              <List dense={dense}>
-                {generate(
-                  <ListItem>Test</ListItem>
-                )}
-              </List>
-            </Grid>
             <>
               <ul>
-                <li>
-                  
-                  Test: One
-                </li>
+                <li>Test: One</li>
                 <li>Test: Two</li>
                 <li>Test: Three</li>
               </ul>
@@ -116,6 +127,7 @@ function ResultList({
           <></>
         )}
       </div>
+      </ThemeProvider>
     </>
   );
 }

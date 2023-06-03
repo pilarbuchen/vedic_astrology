@@ -7,13 +7,12 @@ import React, {
 import CityAutoComplete from './CityAutoComplete';
 import SignList from './ResultList';
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {
   createTheme,
   ThemeProvider,
 } from '@mui/material/styles';
-import dataSVG from './data';
+import dataSVG from '../image/data';
 
 interface FormSubmit {
   onSubmit: (data: {}) => void;
@@ -187,16 +186,6 @@ function Form({ onSubmit }: FormSubmit) {
                 ].join(','),
               },
             })}>
-            {/* <Box
-                    component="form"
-                    sx={{
-                        '& .MuiTextField-root': {
-                            m: 1,
-                            width: '25ch',
-                        },
-                    }}
-                    noValidate
-                    autoComplete="off"> */}
             <div className="inputs">
               <div>
                 <CityAutoComplete
