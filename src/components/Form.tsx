@@ -21,8 +21,13 @@ interface FormSubmit {
 function Form({ onSubmit }: FormSubmit) {
   const [fixed, setFixed] = useState(true);
   const [search, setSearch] = useState(false);
-  const [signs, setSigns] = useState(null);
-  const [chart, setChart] = useState();
+  const [signs, setSigns] = useState([{
+    planets: '',
+    signs: 0,
+    id: 0,
+    planetSVG: '',
+  }]);
+  const [chart, setChart] = useState('');
   const [timeZone, setTimeZone] =
     useState<number>(0);
   const [lat, setLat] = useState<number>(0);
@@ -102,7 +107,7 @@ function Form({ onSubmit }: FormSubmit) {
       let userPlanets = await userData
         ?.output?.[1];
 
-      let keys = [];
+      let keys: string[] = [];
       for (let key in userPlanets) {
         if (userPlanets.hasOwnProperty(key))
           keys.push(key);
@@ -118,7 +123,7 @@ function Form({ onSubmit }: FormSubmit) {
           ));
       }
 
-      let arrListPlantsSigns: {}[] = [];
+      let arrListPlantsSigns: any = [];
 
       planetsArr.forEach(function (v, i) {
         let obj = {

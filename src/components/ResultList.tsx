@@ -1,14 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
 import List from '@mui/material/List';
 import {
-    createTheme,
-    ThemeProvider,
-  } from '@mui/material/styles';
+  createTheme,
+  ThemeProvider,
+} from '@mui/material/styles';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import React from 'react';
 import {
   Avatar,
+  Grid,
   ListItemAvatar,
 } from '@mui/material';
 
@@ -30,7 +31,6 @@ function ResultList({
   search,
   fixed,
 }: SignsProps) {
- 
   const renderList = signs?.map((item) => (
     <ListItem>
       <ListItemAvatar>
@@ -50,7 +50,7 @@ function ResultList({
     </ListItem>
   ));
 
-  if (!search) {
+  if (search && chart) {
     for (const [key, value] of Object.entries(
       signs
     )) {
@@ -84,49 +84,66 @@ function ResultList({
 
   return (
     <>
-       <ThemeProvider
-            theme={createTheme({
-              typography: {
-                fontFamily: [
-                  '-apple-system',
-                  'BlinkMacSystemFont',
-                  '"Segoe UI"',
-                  'Roboto',
-                  '"Helvetica Neue"',
-                  'Arial',
-                  'sans-serif',
-                  '"Apple Color Emoji"',
-                  '"Segoe UI Emoji"',
-                  '"Segoe UI Symbol"',
-                ].join(','),
-              },
-            })}>
-      <div about="">
-        {search && chart ? (
-          <ul>
-            <img
-              src={chart}
-              alt={'chart'}
-            />
-            {renderList}
-          </ul>
-        ) : (
-          <></>
-        )}
-        {fixed ? (
-          <>
+      <ThemeProvider
+        theme={createTheme({
+          typography: {
+            fontFamily: [
+              '-apple-system',
+              'BlinkMacSystemFont',
+              '"Segoe UI"',
+              'Roboto',
+              '"Helvetica Neue"',
+              'Arial',
+              'sans-serif',
+              '"Apple Color Emoji"',
+              '"Segoe UI Emoji"',
+              '"Segoe UI Symbol"',
+            ].join(','),
+          },
+        })}>
+        <div about="">
+          {search && chart ? (
             <>
-              <ul>
-                <li>Test: One</li>
-                <li>Test: Two</li>
-                <li>Test: Three</li>
-              </ul>
+              <Grid
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                container spacing={2} columns={16}>
+                    
+                <Grid
+                  item
+                  xs={6}
+                  >
+                  {renderList}
+                </Grid>
+                <Grid
+                  item
+                  xs={6}
+                  >
+                  <img
+                    src={chart}
+                    alt={'chart'}
+                  />
+                </Grid>
+              </Grid>
             </>
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
+          ) : (
+            <></>
+          )}
+          {fixed ? (
+            <>
+              <>
+                <ul>
+                  <li>Test: One</li>
+                  <li>Test: Two</li>
+                  <li>Test: Three</li>
+                </ul>
+              </>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
       </ThemeProvider>
     </>
   );

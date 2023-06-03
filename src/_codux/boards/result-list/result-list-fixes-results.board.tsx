@@ -3,5 +3,5 @@ import ResultList from '../../../components/ResultList';
 
 export default createBoard({
     name: 'ResultList - Fixes Results',
-    Board: () => <ResultList chart={''} search={false} signs={[]} fixed={true} />
+    Board: () => <ResultList chart={''} search={true} signs={[]} fixed={true} />
 });
