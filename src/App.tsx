@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-    <Nav /> 
+      <Nav />
       <Form onSubmit={submitFormHandler} />
     </div>
   );
