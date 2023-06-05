@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 import { Input } from "@mui/material";
 import Button from '@mui/material/Button';
 import FolderIcon from '@mui/icons-material/Folder';
+import Nav from './components/nav/nav';
+import React from 'react';
 
 function App() {
   function submitFormHandler(data: {}): void {
@@ -14,6 +16,7 @@ function App() {
 
   return (
     <div className="App">
+    <Nav /> 
       <Form onSubmit={submitFormHandler} />
     </div>
   );

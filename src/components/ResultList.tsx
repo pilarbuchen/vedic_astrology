@@ -11,6 +11,7 @@ import {
   Grid,
   ListItemAvatar,
 } from '@mui/material';
+import dataSVG from '../image/data';
 
 interface SignsProps {
   signs: {
@@ -34,8 +35,7 @@ function ResultList({
     <ListItem
       style={{
         marginLeft: '180px',
-      }}
-      >
+      }}>
       <ListItemAvatar>
         <Avatar
           src={item.planetSVG}
@@ -52,6 +52,67 @@ function ResultList({
       />
     </ListItem>
   ));
+
+  let dummyText: string[] = [
+    'Ttile 1',
+    'Ttile 2',
+    'Ttile 3',
+    'Ttile 4',
+    'Ttile 5',
+    'Ttile 6',
+    'Ttile 7',
+    'Ttile 8',
+    'Ttile 9',
+    'Ttile 10',
+    'Ttile 11',
+    'Ttile 12',
+  ];
+  let dummyArray: any = [];
+
+  dummyText.forEach(function (v, i) {
+    let obj = {
+      text: '',
+      planetSVG: '',
+    };
+    obj.text = v;
+    obj.planetSVG = dataSVG[i];
+    dummyArray.push(obj);
+  });
+
+  const renderFakeList = dummyArray.map(
+    (item: {
+      planetSVG: string | undefined;
+      text:
+        | string
+        | number
+        | boolean
+        | React.ReactElement<
+            any,
+            | string
+            | React.JSXElementConstructor<any>
+          >
+        | React.ReactFragment
+        | React.ReactPortal
+        | null
+        | undefined;
+    }) => (
+      <ListItem
+        style={{
+          marginLeft: '180px',
+        }}>
+        <ListItemAvatar>
+          <Avatar
+            src={item.planetSVG}
+            sx={{ width: 20, height: 20 }}
+            style={{
+              objectFit: 'contain',
+            }}
+          />
+        </ListItemAvatar>
+        <ListItemText primary={item.text} />
+      </ListItem>
+    )
+  );
 
   if (search && chart) {
     for (const [key, value] of Object.entries(
@@ -104,13 +165,11 @@ function ResultList({
             ].join(','),
           },
         })}>
-        <div about="">
+        <div>
           {search && chart ? (
             <>
               <Grid
                 direction="row"
-                // justifyContent="center"
-                // alignItems="center"
                 container
                 columns={16}>
                 <Grid
@@ -136,13 +195,29 @@ function ResultList({
           )}
           {fixed ? (
             <>
-              <>
-                <ul>
-                  <li>Test: One</li>
-                  <li>Test: Two</li>
-                  <li>Test: Three</li>
-                </ul>
-              </>
+              <Grid
+                direction="row"
+                container
+                columns={16}>
+                <Grid
+                  item
+                  xs={8}>
+                  {renderFakeList}
+                </Grid>
+                <Grid
+                  item
+                  xs={4}>
+                  <img
+                    style={{
+                      marginTop: '50%',
+                    }}
+                    src={
+                      'https://www.swatijrjyotish.com/uploads/3/6/8/3/3683605/2113310.png?444'
+                    }
+                    alt={'chart'}
+                  />
+                </Grid>
+              </Grid>
             </>
           ) : (
             <></>
