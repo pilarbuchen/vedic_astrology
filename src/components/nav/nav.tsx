@@ -23,7 +23,7 @@ export interface NavProps {
     className?: string;
 }
 
-const pages = ['Calculator', 'Saved Profiles', 'Info'];
+const pages = ['Calculator', 'Saved Profiles', 'Planet Info'];
 const settings = ['Profile', 'Logout'];
 
 

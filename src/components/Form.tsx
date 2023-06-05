@@ -14,6 +14,7 @@ import {
 } from '@mui/material/styles';
 import dataSVG from '../image/data';
 import { Box, Grid } from '@mui/material';
+import Dropdown from './dropdown/dropdown';
 
 interface FormSubmit {
   onSubmit: (data: {}) => void;
@@ -21,6 +22,7 @@ interface FormSubmit {
 
 function Form({ onSubmit }: FormSubmit) {
   const [fixed, setFixed] = useState(true);
+  const [monthList, setMonthList] = useState(0);
   const [search, setSearch] = useState(false);
   const [signs, setSigns] = useState([
     {
@@ -59,9 +61,13 @@ function Form({ onSubmit }: FormSubmit) {
     });
   };
 
+  if(monthList)  {
+
+  }
+
   const data = {
     year: +userInput.year,
-    month: +userInput.month,
+    month: monthList,
     date: +userInput.date,
     hours: +userInput.hours,
     minutes: +userInput.minutes,
@@ -106,7 +112,7 @@ function Form({ onSubmit }: FormSubmit) {
       );
     } else {
       let userData = await response.json();
-      console.log(userData);
+
       let userPlanets = await userData
         ?.output?.[1];
 
@@ -141,7 +147,6 @@ function Form({ onSubmit }: FormSubmit) {
         arrListPlantsSigns.push(obj);
       });
       setSigns(arrListPlantsSigns);
-      console.log(arrListPlantsSigns);
     }
   }
 
@@ -231,6 +236,7 @@ function Form({ onSubmit }: FormSubmit) {
                       />
                     </div>
                     <div>
+                     <Dropdown monthList={monthList} setMonthList={setMonthList}/>
                       <TextField
                         required
                         size="small"
