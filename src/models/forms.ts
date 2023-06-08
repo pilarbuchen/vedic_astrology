@@ -20,19 +20,3 @@
 //       }[]
 // };
 
-export default interface ATest {
-    classA: string,
-};
-
-export default interface BTest{
-  classA: string
-};
-
-export default interface CTest {
-    classA: string
-};
-
-export default interface DTest {
-    classA: string
-};
-

@@ -6,11 +6,10 @@ import FormControl from '@mui/material/FormControl';
 import Select, {
   SelectChangeEvent,
 } from '@mui/material/Select';
-import { useEffect } from 'react';
 
 interface DropDownProps {
   monthList: string;
-  setMonthList: (val: string) => void;
+  setMonthList: React.Dispatch<React.SetStateAction<string>>
 }
 
 const months = [
