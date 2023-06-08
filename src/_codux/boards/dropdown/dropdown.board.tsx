@@ -3,5 +3,5 @@ import Dropdown from '../../../components/dropdown/dropdown';
 
 export default createBoard({
     name: 'Dropdown',
-    Board: () => <Dropdown />
+    Board: () => <Dropdown monthList={""} setMonthList={undefined} />
 });

@@ -11,12 +11,28 @@
 //     id: number
 // }
 
-export default interface SignData {
-    signs: {
-        planets: string;
-        signsData: string | number;
-        id: number;
-        planetSVG: string;
-      }[]
+// export default interface SignData {
+//     signs: {
+//         planets: string;
+//         signsData: string | number;
+//         id: number;
+//         planetSVG: string;
+//       }[]
+// };
+
+export default interface ATest {
+    classA: string,
+};
+
+export default interface BTest{
+  classA: string
+};
+
+export default interface CTest {
+    classA: string
+};
+
+export default interface DTest {
+    classA: string
 };
 

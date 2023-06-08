@@ -6,10 +6,11 @@ import FormControl from '@mui/material/FormControl';
 import Select, {
   SelectChangeEvent,
 } from '@mui/material/Select';
+import { useEffect } from 'react';
 
 interface DropDownProps {
-  monthList: number | string;
-  setMonthList: (val: number) => void;
+  monthList: string;
+  setMonthList: (val: string) => void;
 }
 
 const months = [
@@ -34,40 +35,9 @@ export default function Dropdown({
   const handleChange = (
     event: SelectChangeEvent<typeof monthList>
   ) => {
-    console.log(event.target.value)
-    // if (event.target.value === 'January') {
-    //   setMonthList(1);
-    // } else if (
-    //   event.target.value === 'February'
-    // ) {
-    //   setMonthList(2);
-    // } else if (event.target.value === 'March') {
-    //   setMonthList(3);
-    // } else if (event.target.value === 'April') {
-    //   setMonthList(4);
-    // } else if (event.target.value === 'May') {
-    //   setMonthList(5);
-    // } else if (event.target.value === 'June') {
-    //   setMonthList(6);
-    // } else if (event.target.value === 'July') {
-    //   setMonthList(7);
-    // } else if (event.target.value === 'August') {
-    //   setMonthList(8);
-    // } else if (
-    //   event.target.value === 'September'
-    // ) {
-    //   setMonthList(9);
-    // } else if (event.target.value === 'October') {
-    //   setMonthList(10);
-    // } else if (
-    //   event.target.value === 'November'
-    // ) {
-    //   setMonthList(11);
-    // } else if (
-    //   event.target.value === 'December'
-    // ) {
-    //   setMonthList(12);
-    // }
+  
+      setMonthList(event.target.value);
+
   };
 
   return (

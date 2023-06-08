@@ -21,8 +21,9 @@ interface FormSubmit {
 }
 
 function Form({ onSubmit }: FormSubmit) {
+  const [month, setMonth] = useState(0);
   const [fixed, setFixed] = useState(true);
-  const [monthList, setMonthList] = useState(0);
+  const [monthList, setMonthList] = useState('');
   const [search, setSearch] = useState(false);
   const [signs, setSigns] = useState([
     {
@@ -38,12 +39,12 @@ function Form({ onSubmit }: FormSubmit) {
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);
   const [userInput, setUserInput] = useState({
-    year: 0,
-    month: 0,
-    date: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    year: "",
+    month: "",
+    date: "",
+    hours: "",
+    minutes: "",
+    seconds: "",
     settings: {
       observation_point: 'geocentric',
       ayanamsha: 'lahiri',
@@ -61,13 +62,9 @@ function Form({ onSubmit }: FormSubmit) {
     });
   };
 
-  if(monthList)  {
-
-  }
-
   const data = {
     year: +userInput.year,
-    month: monthList,
+    month: month,
     date: +userInput.date,
     hours: +userInput.hours,
     minutes: +userInput.minutes,
@@ -92,9 +89,36 @@ function Form({ onSubmit }: FormSubmit) {
   useEffect(() => {
     getAPI();
     getAPIChart();
+    changeMonth();
   }, [search]);
 
-  console.log(data);
+  function changeMonth() {
+    if (monthList === 'January') {
+      setMonth(1);
+    } else if (monthList === 'February') {
+      setMonth(2);
+    } else if (monthList === 'March') {
+      setMonth(3);
+    } else if (monthList === 'April') {
+      setMonth(4);
+    } else if (monthList === 'May') {
+      setMonth(5);
+    } else if (monthList === 'June') {
+      setMonth(6);
+    } else if (monthList === 'July') {
+      setMonth(7);
+    } else if (monthList === 'August') {
+      setMonth(8);
+    } else if (monthList === 'September') {
+      setMonth(9);
+    } else if (monthList === 'October') {
+      setMonth(10);
+    } else if (monthList === 'November') {
+      setMonth(11);
+    } else if (monthList === 'December') {
+      setMonth(12);
+    }
+  }
   async function getAPI() {
     const response = await fetch(
       'http://localhost:5000/api/form',
@@ -150,6 +174,7 @@ function Form({ onSubmit }: FormSubmit) {
     }
   }
 
+  console.log(data)
   async function getAPIChart() {
     const response = await fetch(
       'http://localhost:5000/api/chart',
@@ -236,16 +261,11 @@ function Form({ onSubmit }: FormSubmit) {
                       />
                     </div>
                     <div>
-                     <Dropdown monthList={monthList} setMonthList={setMonthList}/>
-                      <TextField
-                        required
-                        size="small"
-                        id="outlined-required"
-                        name="month"
-                        label="Month"
-                        type="number"
-                        value={userInput.month}
-                        onChange={handleChange}
+                      <Dropdown
+                        monthList={monthList}
+                        setMonthList={
+                          setMonthList
+                        }
                       />
                     </div>
                     <div>
@@ -255,7 +275,6 @@ function Form({ onSubmit }: FormSubmit) {
                         id="outlined-required"
                         name="date"
                         label="Day"
-                        type="number"
                         value={userInput.date}
                         onChange={handleChange}
                       />
@@ -267,7 +286,6 @@ function Form({ onSubmit }: FormSubmit) {
                         id="outlined-required"
                         name="hours"
                         label="Hours"
-                        type="number"
                         value={userInput.hours}
                         onChange={handleChange}
                       />
@@ -291,7 +309,6 @@ function Form({ onSubmit }: FormSubmit) {
                         id="outlined-required"
                         name="seconds"
                         label="Seconds"
-                        type="number"
                         value={userInput.seconds}
                         onChange={handleChange}
                       />
