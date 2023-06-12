@@ -1,15 +1,21 @@
 import * as React from 'react';
-import dayjs from 'dayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-const defaultValue = dayjs('2022-04-17T15:30');
+interface DatePickerProps {
+  valueDate: { $M: number | null; $D: number | null; $y: number | null; } | null;
+  setValueDate: React.Dispatch<React.SetStateAction<{ $M: number | null; $D: number | null; $y: number | null; } | null>>
+}
 
-export default function Datepicker() {
+export default function Datepicker({valueDate, setValueDate}: DatePickerProps) {
+ 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DateField defaultValue={defaultValue} />
+      <DateField 
+            label="Controlled field"
+            value={valueDate}
+            onChange={(value) => setValueDate(value)} />
     </LocalizationProvider>
   );
 }

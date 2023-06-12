@@ -1,4 +1,4 @@
-// export default interface UserData { 
+// export default interface UserData {
 //     year: string,
 //     month: string,
 //     date:string ,
@@ -20,3 +20,8 @@
 //       }[]
 // };
 
+export default interface DatePicker {
+    month: number,
+    day: number,
+    year: number
+}

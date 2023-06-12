@@ -15,12 +15,19 @@ import {
 import dataSVG from '../image/data';
 import { Box, Grid } from '@mui/material';
 import Dropdown from './dropdown/dropdown';
+import Datepicker from './datepicker/datepicker';
+import DatePicker from '../models/forms';
 
 interface FormSubmit {
   onSubmit: (data: {}) => void;
 }
 
 function Form({ onSubmit }: FormSubmit) {
+  const [valueDate, setValueDate] = useState<{$M: null | number, $D: null | number, $y: null | number} | null>({
+    $M: 0,
+    $y: 0,
+    $D: 0
+  });
   const [month, setMonth] = useState(0);
   const [fixed, setFixed] = useState(true);
   const [monthList, setMonthList] = useState('');
@@ -63,9 +70,9 @@ function Form({ onSubmit }: FormSubmit) {
   };
 
   const data = {
-    year: +userInput.year,
-    month: month,
-    date: +userInput.date,
+    year: valueDate?.$y,
+    month: valueDate?.$M,
+    date: valueDate?.$D,
     hours: +userInput.hours,
     minutes: +userInput.minutes,
     seconds: +userInput.seconds,
@@ -260,6 +267,7 @@ function Form({ onSubmit }: FormSubmit) {
                         className="text"
                       />
                     </div>
+                    <Datepicker valueDate={valueDate} setValueDate={setValueDate}/>
                     <div>
                       <Dropdown
                         monthList={monthList}
