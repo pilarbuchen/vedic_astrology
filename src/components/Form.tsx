@@ -14,7 +14,7 @@ import {
 } from '@mui/material/styles';
 import dataSVG from '../image/data';
 import { Box, Grid } from '@mui/material';
-import Datepicker from './datepicker/datepicker';
+import { Datepicker } from './datepicker/datepicker';
 import Timepicker from './timepicker/timepicker';
 
 interface FormSubmit {

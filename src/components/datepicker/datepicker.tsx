@@ -8,7 +8,7 @@ interface DatePickerProps {
   setValueDate: React.Dispatch<React.SetStateAction<{ $M: number ; $D: number | null; $y: number | null; } | null>>
 }
 
-export default function Datepicker({valueDate, setValueDate}: DatePickerProps) {
+export function Datepicker({valueDate, setValueDate}: DatePickerProps) {
  
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
