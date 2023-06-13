@@ -14,19 +14,22 @@ import {
 } from '@mui/material/styles';
 import dataSVG from '../image/data';
 import { Box, Grid } from '@mui/material';
-import Dropdown from './dropdown/dropdown';
 import Datepicker from './datepicker/datepicker';
-import DatePicker from '../models/forms';
+import Timepicker from './timepicker/timepicker';
 
 interface FormSubmit {
   onSubmit: (data: {}) => void;
 }
 
 function Form({ onSubmit }: FormSubmit) {
-  const [valueDate, setValueDate] = useState<{$M: number, $D: null | number, $y: null | number} | null>({
+  const [valueDate, setValueDate] = useState<{
+    $M: number;
+    $D: null | number;
+    $y: null | number;
+  } | null>({
     $M: 0,
     $y: 0,
-    $D: 0
+    $D: 0,
   });
   const [fixed, setFixed] = useState(true);
   const [search, setSearch] = useState(false);
@@ -44,12 +47,12 @@ function Form({ onSubmit }: FormSubmit) {
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);
   const [userInput, setUserInput] = useState({
-    year: "",
-    month: "",
-    date: "",
-    hours: "",
-    minutes: "",
-    seconds: "",
+    year: '',
+    month: '',
+    date: '',
+    hours: '',
+    minutes: '',
+    seconds: '',
     settings: {
       observation_point: 'geocentric',
       ayanamsha: 'lahiri',
@@ -90,7 +93,6 @@ function Form({ onSubmit }: FormSubmit) {
     event.preventDefault();
     onSubmit(setUserInput);
   };
-
 
   useEffect(() => {
     getAPI();
@@ -152,7 +154,7 @@ function Form({ onSubmit }: FormSubmit) {
     }
   }
 
-  console.log(data)
+  console.log(data);
   async function getAPIChart() {
     const response = await fetch(
       'http://localhost:5000/api/chart',
@@ -225,7 +227,11 @@ function Form({ onSubmit }: FormSubmit) {
                         setLng={setLng}
                       />
                     </div>
-                    <Datepicker valueDate={valueDate} setValueDate={setValueDate}/>
+                    <Datepicker
+                      valueDate={valueDate}
+                      setValueDate={setValueDate}
+                    />
+                    <Timepicker />
                     <div>
                       <TextField
                         required
