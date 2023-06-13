@@ -4,8 +4,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 interface DatePickerProps {
-  valueDate: { $M: number | null; $D: number | null; $y: number | null; } | null;
-  setValueDate: React.Dispatch<React.SetStateAction<{ $M: number | null; $D: number | null; $y: number | null; } | null>>
+  valueDate: { $M: number ; $D: number | null; $y: number | null; } | null;
+  setValueDate: React.Dispatch<React.SetStateAction<{ $M: number ; $D: number | null; $y: number | null; } | null>>
 }
 
 export default function Datepicker({valueDate, setValueDate}: DatePickerProps) {

@@ -23,14 +23,12 @@ interface FormSubmit {
 }
 
 function Form({ onSubmit }: FormSubmit) {
-  const [valueDate, setValueDate] = useState<{$M: null | number, $D: null | number, $y: null | number} | null>({
+  const [valueDate, setValueDate] = useState<{$M: number, $D: null | number, $y: null | number} | null>({
     $M: 0,
     $y: 0,
     $D: 0
   });
-  const [month, setMonth] = useState(0);
   const [fixed, setFixed] = useState(true);
-  const [monthList, setMonthList] = useState('');
   const [search, setSearch] = useState(false);
   const [signs, setSigns] = useState([
     {
@@ -71,7 +69,7 @@ function Form({ onSubmit }: FormSubmit) {
 
   const data = {
     year: valueDate?.$y,
-    month: valueDate?.$M,
+    month: valueDate!?.$M + 1,
     date: valueDate?.$D,
     hours: +userInput.hours,
     minutes: +userInput.minutes,
@@ -93,39 +91,12 @@ function Form({ onSubmit }: FormSubmit) {
     onSubmit(setUserInput);
   };
 
+
   useEffect(() => {
     getAPI();
     getAPIChart();
-    changeMonth();
   }, [search]);
 
-  function changeMonth() {
-    if (monthList === 'January') {
-      setMonth(1);
-    } else if (monthList === 'February') {
-      setMonth(2);
-    } else if (monthList === 'March') {
-      setMonth(3);
-    } else if (monthList === 'April') {
-      setMonth(4);
-    } else if (monthList === 'May') {
-      setMonth(5);
-    } else if (monthList === 'June') {
-      setMonth(6);
-    } else if (monthList === 'July') {
-      setMonth(7);
-    } else if (monthList === 'August') {
-      setMonth(8);
-    } else if (monthList === 'September') {
-      setMonth(9);
-    } else if (monthList === 'October') {
-      setMonth(10);
-    } else if (monthList === 'November') {
-      setMonth(11);
-    } else if (monthList === 'December') {
-      setMonth(12);
-    }
-  }
   async function getAPI() {
     const response = await fetch(
       'http://localhost:5000/api/form',
@@ -254,39 +225,7 @@ function Form({ onSubmit }: FormSubmit) {
                         setLng={setLng}
                       />
                     </div>
-                    <div>
-                      <TextField
-                        size="small"
-                        required
-                        id="outlined-required"
-                        name="year"
-                        label="Year"
-                        type="number"
-                        value={userInput.year}
-                        onChange={handleChange}
-                        className="text"
-                      />
-                    </div>
                     <Datepicker valueDate={valueDate} setValueDate={setValueDate}/>
-                    <div>
-                      <Dropdown
-                        monthList={monthList}
-                        setMonthList={
-                          setMonthList
-                        }
-                      />
-                    </div>
-                    <div>
-                      <TextField
-                        required
-                        size="small"
-                        id="outlined-required"
-                        name="date"
-                        label="Day"
-                        value={userInput.date}
-                        onChange={handleChange}
-                      />
-                    </div>
                     <div>
                       <TextField
                         required
