@@ -9,11 +9,11 @@ interface DatePickerProps {
 }
 
 export function Datepicker({valueDate, setValueDate}: DatePickerProps) {
- 
+ console.log(valueDate)
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateField 
-            label="Controlled field"
+            label="Enter Date of Birth"
             value={valueDate}
             onChange={(value) => setValueDate(value)} />
     </LocalizationProvider>

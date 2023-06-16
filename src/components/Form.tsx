@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import CityAutoComplete from './CityAutoComplete';
 import SignList from './ResultList';
-import TextField from '@mui/material/TextField';
+
 import Button from '@mui/material/Button';
 import {
   createTheme,
@@ -22,6 +22,17 @@ interface FormSubmit {
 }
 
 function Form({ onSubmit }: FormSubmit) {
+  const [valueTime, setValueTime] =
+    React.useState<{
+      $H: number;
+      $m: number;
+      $s: number;
+    } | null>({
+      $H: 0,
+      $m: 0,
+      $s: 0,
+    });
+
   const [valueDate, setValueDate] = useState<{
     $M: number;
     $D: null | number;
@@ -31,7 +42,6 @@ function Form({ onSubmit }: FormSubmit) {
     $y: 0,
     $D: 0,
   });
-  const [fixed, setFixed] = useState(true);
   const [search, setSearch] = useState(false);
   const [signs, setSigns] = useState([
     {
@@ -46,44 +56,20 @@ function Form({ onSubmit }: FormSubmit) {
     useState<number>(0);
   const [lat, setLat] = useState<number>(0);
   const [lng, setLng] = useState<number>(0);
-  const [userInput, setUserInput] = useState({
-    year: '',
-    month: '',
-    date: '',
-    hours: '',
-    minutes: '',
-    seconds: '',
-    settings: {
-      observation_point: 'geocentric',
-      ayanamsha: 'lahiri',
-    },
-  });
-
-  const handleChange = (
-    event: React.FormEvent
-  ) => {
-    setUserInput({
-      ...userInput,
-      [(event.target as HTMLInputElement).name]: (
-        event.target as HTMLInputElement
-      ).value,
-    });
-  };
 
   const data = {
     year: valueDate?.$y,
     month: valueDate!?.$M + 1,
     date: valueDate?.$D,
-    hours: +userInput.hours,
-    minutes: +userInput.minutes,
-    seconds: +userInput.seconds,
+    hours: valueTime?.$H,
+    minutes: valueTime?.$m,
+    seconds: valueTime?.$s,
     latitude: lat,
     longitude: lng,
     timezone: timeZone,
     settings: {
-      observation_point:
-        userInput.settings.observation_point,
-      ayanamsha: userInput.settings.ayanamsha,
+      observation_point: 'geocentric',
+      ayanamsha: 'lahiri',
     },
   };
 
@@ -91,7 +77,6 @@ function Form({ onSubmit }: FormSubmit) {
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-    onSubmit(setUserInput);
   };
 
   useEffect(() => {
@@ -154,7 +139,6 @@ function Form({ onSubmit }: FormSubmit) {
     }
   }
 
-  console.log(data);
   async function getAPIChart() {
     const response = await fetch(
       'http://localhost:5000/api/chart',
@@ -231,41 +215,10 @@ function Form({ onSubmit }: FormSubmit) {
                       valueDate={valueDate}
                       setValueDate={setValueDate}
                     />
-                    <Timepicker />
-                    <div>
-                      <TextField
-                        required
-                        size="small"
-                        id="outlined-required"
-                        name="hours"
-                        label="Hours"
-                        value={userInput.hours}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div>
-                      <TextField
-                        required
-                        size="small"
-                        id="outlined-required"
-                        name="minutes"
-                        label="Minutes"
-                        type="number"
-                        value={userInput.minutes}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div>
-                      <TextField
-                        required
-                        size="small"
-                        id="outlined-required"
-                        name="seconds"
-                        label="Seconds"
-                        value={userInput.seconds}
-                        onChange={handleChange}
-                      />
-                    </div>
+                    <Timepicker
+                      valueTime={valueTime}
+                      setValueTime={setValueTime}
+                    />
                   </div>
                   <br />
                   <div className="button-margin">
@@ -275,7 +228,6 @@ function Form({ onSubmit }: FormSubmit) {
                       className="btn btn-primary"
                       onClick={() => {
                         setSearch(!search);
-                        setFixed(!fixed);
                       }}>
                       Submit
                     </Button>
